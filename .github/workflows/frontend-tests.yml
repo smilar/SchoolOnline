@@ -1,0 +1,52 @@
+name: Frontend Tests
+
+on:
+  push:
+    branches: [ main, develop, 'lab/**' ]
+    paths:
+      - 'online-school-frontend/**'
+      - '.github/workflows/frontend-tests.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'online-school-frontend/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: ['18.x']
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: online-school-frontend/package-lock.json
+    
+    - name: Install dependencies
+      working-directory: online-school-frontend
+      run: npm ci
+    
+    - name: Run linter
+      working-directory: online-school-frontend
+      run: npm run lint --if-present
+    
+    - name: Run tests
+      working-directory: online-school-frontend
+      run: npm test -- --run
+    
+    - name: Build application
+      working-directory: online-school-frontend
+      run: npm run build
+    
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: frontend-build
+        path: online-school-frontend/dist
