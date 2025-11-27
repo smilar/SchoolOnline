@@ -16,8 +16,8 @@ public class Teacher extends User {
 
     @NotBlank(message = "Employee ID is required")
     @Size(min = 3, max = 20, message = "Employee ID must be between 3 and 20 characters")
-    @Column(name = "employee_id", nullable = false, unique = true, length = 20)
-    private String employeeId;
+    @Column(name = "employee_id", unique = true, length = 20)
+    private String employeeId; // Now nullable and auto-generated
 
     @NotBlank(message = "Department is required")
     @Size(min = 2, max = 100, message = "Department must be between 2 and 100 characters")
@@ -37,10 +37,9 @@ public class Teacher extends User {
         super();
     }
 
-    // Constructor with required fields
-    public Teacher(String name, String email, String employeeId, String department, LocalDate hireDate) {
+    // Constructor with required fields (remove employeeId param)
+    public Teacher(String name, String email, String department, LocalDate hireDate) {
         super(name, email);
-        this.employeeId = employeeId;
         this.department = department;
         this.hireDate = hireDate;
     }

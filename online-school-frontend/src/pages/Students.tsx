@@ -206,13 +206,6 @@ const Students: React.FC = () => {
               required
             />
             <TextField
-              label="Student ID"
-              value={formData.studentId}
-              onChange={(e) => setFormData({ ...formData, studentId: e.target.value })}
-              fullWidth
-              required
-            />
-            <TextField
               label="Enrollment Date"
               type="date"
               value={formData.enrollmentDate}

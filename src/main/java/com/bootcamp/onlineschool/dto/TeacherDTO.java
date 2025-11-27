@@ -15,10 +15,8 @@ import java.util.Set;
 @Schema(description = "Teacher data transfer object extending user information with teacher-specific details")
 public class TeacherDTO extends UserDTO {
 
-    @Schema(description = "Unique employee identifier", example = "EMP001", required = true)
-    @NotBlank(message = "Employee ID is required")
-    @Size(min = 3, max = 20, message = "Employee ID must be between 3 and 20 characters")
-    private String employeeId;
+    @Schema(description = "Unique employee identifier", example = "EMP001")
+    private String employeeId; // Not required for creation
 
     @Schema(description = "Department where the teacher works", example = "Computer Science", required = true)
     @NotBlank(message = "Department is required")
@@ -42,6 +40,13 @@ public class TeacherDTO extends UserDTO {
     public TeacherDTO(String name, String email, String employeeId, String department, LocalDate hireDate) {
         super(name, email);
         this.employeeId = employeeId;
+        this.department = department;
+        this.hireDate = hireDate;
+    }
+
+    // Constructor for creation (no employeeId)
+    public TeacherDTO(String name, String email, String department, LocalDate hireDate) {
+        super(name, email);
         this.department = department;
         this.hireDate = hireDate;
     }

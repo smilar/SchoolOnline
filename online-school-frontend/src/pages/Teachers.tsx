@@ -210,13 +210,6 @@ const Teachers: React.FC = () => {
               required
             />
             <TextField
-              label="Employee ID"
-              value={formData.employeeId}
-              onChange={(e) => setFormData({ ...formData, employeeId: e.target.value })}
-              fullWidth
-              required
-            />
-            <TextField
               label="Department"
               value={formData.department}
               onChange={(e) => setFormData({ ...formData, department: e.target.value })}

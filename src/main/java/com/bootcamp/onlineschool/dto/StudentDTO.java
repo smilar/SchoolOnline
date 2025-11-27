@@ -15,10 +15,8 @@ import java.util.Set;
 @Schema(description = "Student data transfer object extending user information with student-specific details")
 public class StudentDTO extends UserDTO {
 
-    @Schema(description = "Unique student identifier", example = "STU001", required = true)
-    @NotBlank(message = "Student ID is required")
-    @Size(min = 3, max = 20, message = "Student ID must be between 3 and 20 characters")
-    private String studentId;
+    @Schema(description = "Unique student identifier", example = "STU001")
+    private String studentId; // Not required for creation
 
     @Schema(description = "Date when the student enrolled", example = "2023-01-15", required = true)
     @NotNull(message = "Enrollment date is required")
@@ -37,9 +35,8 @@ public class StudentDTO extends UserDTO {
     }
 
     // Constructor with required fields
-    public StudentDTO(String name, String email, String studentId, LocalDate enrollmentDate) {
+    public StudentDTO(String name, String email, LocalDate enrollmentDate) {
         super(name, email);
-        this.studentId = studentId;
         this.enrollmentDate = enrollmentDate;
     }
 

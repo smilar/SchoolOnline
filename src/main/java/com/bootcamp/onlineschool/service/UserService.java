@@ -40,8 +40,7 @@ public class UserService {
         User user = new User();
         user.setName(userDTO.getName());
         user.setEmail(userDTO.getEmail());
-        
-        User savedUser = userRepository.save(user);
+        User savedUser = userRepository.save(user); // id is auto-generated
         return UserDTO.fromEntity(savedUser);
     }
 

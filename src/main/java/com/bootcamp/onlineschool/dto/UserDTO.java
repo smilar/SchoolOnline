@@ -9,9 +9,7 @@ import java.time.LocalDateTime;
 
 @Schema(description = "User data transfer object representing base user information")
 public class UserDTO {
-
-    @Schema(description = "Unique identifier for the user", example = "1")
-    private Long id;
+    private Long id; // Only used for responses, not for creation
 
     @Schema(description = "Full name of the user", example = "John Doe", required = true)
     @NotBlank(message = "Name is required")

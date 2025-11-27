@@ -41,8 +41,12 @@ public class StudentService {
      */
     public StudentDTO create(StudentDTO studentDTO) {
         validateStudentForCreation(studentDTO);
-        
+
         Student student = studentDTO.toEntity();
+        // Auto-generate studentId
+        String nextStudentId = generateNextStudentId();
+        student.setStudentId(nextStudentId);
+
         Student savedStudent = studentRepository.save(student);
         return StudentDTO.fromEntity(savedStudent);
     }
@@ -248,10 +252,7 @@ public class StudentService {
             throw new ValidationException("Email is required");
         }
 
-        if (studentDTO.getStudentId() == null || studentDTO.getStudentId().trim().isEmpty()) {
-            throw new ValidationException("Student ID is required");
-        }
-
+        // Remove studentId check
         if (studentDTO.getEnrollmentDate() == null) {
             throw new ValidationException("Enrollment date is required");
         }
@@ -283,5 +284,15 @@ public class StudentService {
         if (clazz.getStudents().size() >= clazz.getMaxCapacity()) {
             throw new ValidationException("Class has reached maximum capacity: " + clazz.getMaxCapacity());
         }
+    }
+
+    // Add this helper method to StudentService
+    private String generateNextStudentId() {
+        long count = studentRepository.count() + 1;
+        String id;
+        do {
+            id = String.format("STU%04d", count++);
+        } while (studentRepository.existsByStudentId(id));
+        return id;
     }
 }

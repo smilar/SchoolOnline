@@ -16,8 +16,8 @@ public class Student extends User {
 
     @NotBlank(message = "Student ID is required")
     @Size(min = 3, max = 20, message = "Student ID must be between 3 and 20 characters")
-    @Column(name = "student_id", nullable = false, unique = true, length = 20)
-    private String studentId;
+    @Column(name = "student_id", nullable = true, unique = true, length = 20)
+    private String studentId; // Now nullable and auto-generated
 
     @NotNull(message = "Enrollment date is required")
     @Past(message = "Enrollment date must be in the past")
@@ -35,10 +35,9 @@ public class Student extends User {
         super();
     }
 
-    // Constructor with required fields
-    public Student(String name, String email, String studentId, LocalDate enrollmentDate) {
+    // Constructor with required fields (remove studentId param)
+    public Student(String name, String email, LocalDate enrollmentDate) {
         super(name, email);
-        this.studentId = studentId;
         this.enrollmentDate = enrollmentDate;
     }
 

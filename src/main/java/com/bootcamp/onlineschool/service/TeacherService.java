@@ -41,8 +41,12 @@ public class TeacherService {
      */
     public TeacherDTO create(TeacherDTO teacherDTO) {
         validateTeacherForCreation(teacherDTO);
-        
+
         Teacher teacher = teacherDTO.toEntity();
+        // Auto-generate employeeId
+        String nextEmployeeId = generateNextEmployeeId();
+        teacher.setEmployeeId(nextEmployeeId);
+
         Teacher savedTeacher = teacherRepository.save(teacher);
         return TeacherDTO.fromEntity(savedTeacher);
     }
@@ -267,10 +271,6 @@ public class TeacherService {
             throw new ValidationException("Email is required");
         }
 
-        if (teacherDTO.getEmployeeId() == null || teacherDTO.getEmployeeId().trim().isEmpty()) {
-            throw new ValidationException("Employee ID is required");
-        }
-
         if (teacherDTO.getDepartment() == null || teacherDTO.getDepartment().trim().isEmpty()) {
             throw new ValidationException("Department is required");
         }
@@ -312,5 +312,15 @@ public class TeacherService {
         if (teacher.getClasses().contains(clazz)) {
             throw new ValidationException("Teacher is already assigned to class: " + clazz.getName());
         }
+    }
+
+    // Add this helper method to TeacherService
+    private String generateNextEmployeeId() {
+        long count = teacherRepository.count() + 1;
+        String id;
+        do {
+            id = String.format("EMP%04d", count++);
+        } while (teacherRepository.existsByEmployeeId(id));
+        return id;
     }
 }
