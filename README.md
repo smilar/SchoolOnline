@@ -1,3 +1,6 @@
+# Lecture Practice
+This lecture introduced how to use git and github commands in a practical scenario what I mostly like is that I was introduced into Directed Acyclic graph which github depends on 
+
 # Online School Backend
 
 A Spring Boot backend service for an online school management system designed to teach bootcamp students.
